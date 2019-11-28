@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>商城首页</title>
+    <link rel="stylesheet" href="/js/bootstrap/css/bootstrap.min.css">
+    <link rel="icon" href="/js/shop/assets/img/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="/js/shop/css/webbase.css" />
+    <link rel="stylesheet" type="text/css" href="/js/shop/css/pages-JD-index.css" />
+    <link rel="stylesheet" type="text/css" href="/js/shop/css/widget-jquery.autocomplete.css" />
+    <link rel="stylesheet" type="text/css" href="/js/shop/css/widget-cartPanelView.css" />
+
+    <script src="/js/jquery-3.3.1.js"></script>
+    <script src="/js/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/shop/js/pages/index.js"></script>
+    <script src="/js/common/nav3.js"></script>
+</head>
+
+<body>
+
+<style>
+
+    .SortList {
+        height: 100px;
+    }
+
+    .SortList .all-sort-list {
+        background: #c81623;
+    }
+
+    .sort .all-sort-list2 .item-list {
+        min-height: 100px;
+    }
+
+</style>
+<div id="navDiv"></div>
+<div id="nav-bottom">
+    <!--顶部-->
+    <div class="nav-top">
+        <!--头部-->
+        <div class="header">
+            <div class="py-container">
+                <div class="yui3-g NavList">
+                    <div class="yui3-u Left all-sort">
+                        <h4>全部商品分类</h4>
+                    </div>
+                    <div class="yui3-u Center navArea">
+                        <ul class="nav">
+                            <li class="f-item">服装城</li>
+                            <li class="f-item">美妆馆</li>
+                            <li class="f-item">品优超市</li>
+                            <li class="f-item">全球购</li>
+                            <li class="f-item">闪购</li>
+                            <li class="f-item">团购</li>
+                            <li class="f-item">有趣</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--列表-->
+<div class="sort">
+    <div class="py-container">
+        <div class="yui3-g SortList ">
+            <div class="yui3-u Left all-sort-list">
+                <div class="all-sort-list2" id="categoryDiv">
+                    <div class="item">
+                       <!-- <h3><a href="">数字商品</a></h3>-->
+                        <div class="item-list clearfix">
+                            <div class="subitem">
+                                <dl class="fore1">
+                                    <dt><a href="">电子书</a></dt>
+                                    <dd><a href="">免费</a><a href="">小说</a></em><a href="">励志与成功</a><em><a href="">婚恋/两性</a></em><em><a href="">文学</a></em><em><a href="">经管</a></em><em><a href="">畅读VIP</a></em></dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row" >
+        <div class="col-md-12">
+            <div class="panel panel-success">
+                <div class="panel-heading">商品列表</div>
+                <div class="panel-body" id="productListDiv"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" >
+        <div class="col-md-12">
+            <div class="panel panel-success">
+                <div class="panel-heading">热销商品</div>
+                <div class="panel-body" id="countListDiv">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" >
+        <div class="col-md-12">
+            <div class="panel panel-success">
+                <div class="panel-heading">热销品牌</div>
+                <div class="panel-body" id="bandListDiv">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="bandDiv" style="display:none;">
+    <div class="col-md-4">
+        <div class="thumbnail">
+            <div class="caption">
+                <h3>品牌名称:##brandName##</h3>
+                <p><b><font color="red">总销量:##ocount##</font></b></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="countDiv" style="display:none;">
+    <div class="col-md-4">
+        <div class="thumbnail">
+            <img src="http://192.168.111.134:80/##mainImage##" width="50px">
+            <div class="caption">
+                <h3>商品名:##produtName##</h3>
+                <p><b><font color="red">价格:##price##</font></b></p>
+                <p><b><font color="red">总销量:##count##</font></b></p>
+                <p><a href="#" class="btn btn-primary" role="button" onclick="buy('##id##','1')">加入购物车</a> <a href="#" class="btn btn-default" role="button">收藏</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="productDiv" style="display:none;">
+    <div class="col-md-4">
+        <div class="thumbnail">
+            <img src="http://192.168.111.134:80/##mainImage##" width="50px">
+            <div class="caption">
+                <h3>商品名:##produtName##</h3>
+                <p><b><font color="red">价格:##price##</font></b></p>
+                <p><a href="#" class="btn btn-primary" role="button" onclick="buy('##id##','1')">加入购物车</a> <a href="#" class="btn btn-default" role="button">收藏</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        initCategory();
+        initProduct();
+        initProductcount();
+        initProductBrand();
+    })
+
+    function initCss() {
+        $('.all-sort-list2 > .item').hover(function() {
+            //父类分类列表容器的高度
+            $(this).addClass('hover');
+            $(this).children('.item-list').css('display', 'block');
+        }, function() {
+            $(this).removeClass('hover');
+            $(this).children('.item-list').css('display', 'none');
+        });
+
+        $('.item > .item-list > .close').click(function() {
+            $(this).parent().parent().removeClass('hover');
+            $(this).parent().hide();
+        });
+    }
+    var categoryList = "";
+    function initCategory(){
+        $.ajax({
+            url:"http://localhost:8086/category/queryList.do",
+            type:"get",
+            dataType:"json",
+            success:function (res) {
+                console.log(res);
+                if (res.status == 200) {
+                categoryList = res.data;
+                    for (var i = 0; i < categoryList.length; i++) {
+                        if(categoryList[i].pid == 0){
+                            str +='<div class="item"><h3><a href=""></a>'+categoryList[i].categoryName+'</h3>'
+                            buildChild(categoryList[i].id);
+                            str +='</div>';
+                        }
+                        $("#categoryDiv").html(str);
+                        initCss();
+                    }
+                 }
+            },
+            error:function () {
+                alert("查询类型失败！！！");
+            }
+        })
+    }
+    var str="";
+    function buildChild(pid){
+        str +='<div class="item-list clearfix">';
+        str +='<div class="subitem">' ;
+        for (var i = 0; i < categoryList.length; i++) {
+            if(pid == categoryList[i].pid){
+                str += '<dl class="fore1">';
+                str +='<dt><a href="">'+categoryList[i].categoryName+'</a></dt>';
+                buildChildChild(categoryList[i].id)
+                str += '</dl>';
+            }
+        }
+        str += '</div></div>';
+    }
+
+    function buildChildChild(pid) {
+        str += '<dd>';
+        for (var i = 0; i < categoryList.length; i++) {
+            if (pid == categoryList[i].pid) {
+                str += '<em><a href="">' + categoryList[i].categoryName + '</a></em>';
+            }
+        }
+        str += '</dd>';
+    }
+
+    /*
+    * 查询所有产品
+    * */
+    var productList ="";
+    function initProduct(){
+        $.ajax({
+            url:"http://localhost:8086/product/queryProductList.do",
+            success:function (res) {
+                console.log(res);
+                productList = res.data;
+                var productHtml = $("#productDiv").html();
+                if (res.status == 200) {
+                    for (var i = 0; i < productList.length; i++) {
+                        var pro = productList[i];
+                        /*alert(JSON.stringify(pro));*/
+                        var pstr = productHtml.replace(/##produtName##/g,pro.productName)
+                            .replace(/##mainImage##/g,pro.filePath)
+                            .replace(/##price##/g,pro.price)
+                            .replace(/##id##/g,pro.id)
+                        $("#productListDiv").append(pstr);
+                    }
+                }
+            },
+            error:function () {
+                alert("查询商品失败！！！");
+            }
+        })
+    }
+
+    /*
+    * 查询热销产品
+    * */
+    function initProductcount(){
+        $.ajax({
+            url:"http://localhost:8086/product/queryCountProductList.do",
+            success:function (res) {
+                console.log(res);
+                var productList = res.data;
+                var productHtml = $("#countDiv").html();
+                if (res.status == 200) {
+                    for (var i = 0; i < productList.length; i++) {
+                        var pro = productList[i];
+                        /*alert(JSON.stringify(pro));*/
+                        var pstr = productHtml.replace(/##produtName##/g,pro.productName)
+                            .replace(/##mainImage##/g,pro.filePath)
+                            .replace(/##price##/g,pro.price)
+                            .replace(/##count##/g,pro.count)
+                            .replace(/##id##/g,pro.id)
+                        $("#countListDiv").append(pstr);
+                    }
+                }
+            },
+            error:function () {
+                alert("查询热销商品失败！！！");
+            }
+        })
+    }
+
+    /*
+    * 查询热销品牌
+    * */
+    function initProductBrand(){
+        $.ajax({
+            url:"http://localhost:8086/product/queryCountBandList.do",
+            success:function (res) {
+                console.log(res);
+                var productList = res.data;
+                var productHtml = $("#bandDiv").html();
+                if (res.status == 200) {
+                    for (var i = 0; i < productList.length; i++) {
+                        var pro = productList[i];
+                        /*alert(JSON.stringify(pro));*/
+                        var pstr = productHtml.replace(/##brandName##/g,pro.brandName)
+                            .replace(/##ocount##/g,pro.ocount)
+                        $("#bandListDiv").append(pstr);
+                    }
+                }
+            },
+            error:function () {
+                alert("查询热销品牌失败！！！");
+            }
+        })
+    }
+
+</script>
+</body>
+</html>

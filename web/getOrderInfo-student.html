@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+	<title>结算页</title>
+
+	<link rel="stylesheet" type="text/css" href="/js/shop/css/webbase.css" />
+	<link rel="stylesheet" type="text/css" href="/js/shop/css/pages-getOrderInfo.css" />
+</head>
+<body>
+<!--head-->
+<div class="top">
+	<div class="py-container">
+		<div class="shortcut">
+			<ul class="fl">
+				<li class="f-item">品优购欢迎您！</li>
+				<li class="f-item">请登录　<span><a href="#">免费注册</a></span></li>
+			</ul>
+			<ul class="fr">
+				<li class="f-item">我的订单</li>
+				<li class="f-item space"></li>
+				<li class="f-item">我的品优购</li>
+				<li class="f-item space"></li>
+				<li class="f-item">品优购会员</li>
+				<li class="f-item space"></li>
+				<li class="f-item">企业采购</li>
+				<li class="f-item space"></li>
+				<li class="f-item">关注品优购</li>
+				<li class="f-item space"></li>
+				<li class="f-item">客户服务</li>
+				<li class="f-item space"></li>
+				<li class="f-item">网站导航</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="cart py-container">
+	<!--logoArea-->
+	<div class="logoArea">
+		<div class="fl logo"><span class="title">结算页</span></div>
+		<div class="fr search">
+			<form class="sui-form form-inline">
+				<div class="input-append">
+					<input type="text" type="text" class="input-error input-xxlarge" placeholder="品优购自营" />
+					<button class="sui-btn btn-xlarge btn-danger" type="button">搜索</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<!--主内容-->
+	<div class="checkout py-container">
+		<div class="checkout-tit">
+			<h4 class="tit-txt">填写并核对订单信息</h4>
+		</div>
+		<div class="checkout-steps">
+			<!--收件人信息-->
+			<div class="step-tit">
+				<h5>收件人信息<span><a data-toggle="modal" data-target=".edit" data-keyboard="false" class="newadd" >新增收货地址</a></span></h5>
+			</div>
+			<div class="step-cont">
+				<div class="addressInfo">
+					<ul class="addr-detail">
+						<li class="addr-item" id="address_li">
+
+						</li>
+					</ul>
+
+
+					<!--添加地址-->
+					<div  tabindex="-1" role="dialog" data-hasfoot="false" class="sui-modal hide fade edit">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" data-dismiss="modal" aria-hidden="true" class="sui-close">×</button>
+									<h4 id="myModalLabel" class="modal-title">添加收货地址</h4>
+								</div>
+								<div class="modal-body">
+									<form action="http://localhost:8086/address/addAddress.do"  method="post" class="sui-form form-horizontal">
+										<div class="control-group">
+											<label class="control-label">收货人：</label>
+											<div class="controls">
+												<input type="text" class="input-medium" id="addressee">
+											</div>
+										</div>
+
+										<div class="control-group">
+											<label class="control-label">详细地址：</label>
+											<div class="controls">
+												<input type="text" class="input-large" id="addressName">
+											</div>
+										</div>
+										<div class="control-group">
+											<label class="control-label">联系电话：</label>
+											<div class="controls">
+												<input type="text" class="input-medium" id="phone">
+											</div>
+										</div>
+
+										<div class="control-group">
+											<label class="control-label">是否默认：</label>
+											<div class="controls">
+												<input type="radio" class="input-medium" value="1" name="status">是&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+												<input type="radio" class="input-medium" value="0" name="status">否
+											</div>
+										</div>
+
+										<div class="modal-footer">
+											<button type="button" onclick="addAddress()" data-ok="modal" class="sui-btn btn-primary btn-large">确定</button>
+											<button type="button" data-dismiss="modal" class="sui-btn btn-default btn-large">取消</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--确认地址-->
+				</div>
+				<div class="hr"></div>
+
+			</div>
+			<div class="hr"></div>
+			<!--支付和送货-->
+			<div class="payshipInfo">
+				<div class="step-tit">
+					<h5>支付方式</h5>
+				</div>
+				<div class="step-cont">
+					<ul class="payType">
+						<li class="selected">微信付款<span title="点击取消选择"></span></li>
+						<li>货到付款<span title="点击取消选择"></span></li>
+					</ul>
+				</div>
+				<div class="hr"></div>
+				<div class="step-tit">
+					<h5>送货清单</h5>
+				</div>
+				<div class="step-cont">
+					<ul class="send-detail">
+						<li>
+							<div class="sendGoods" id="song">
+
+							</div>
+						</li>
+						<li></li>
+						<li></li>
+					</ul>
+				</div>
+				<div class="hr"></div>
+			</div>
+			<div class="linkInfo">
+				<div class="step-tit">
+					<h5>发票信息</h5>
+				</div>
+				<div class="step-cont">
+					<span>普通发票（电子）</span>
+					<span>个人</span>
+					<span>明细</span>
+				</div>
+			</div>
+			<div class="cardInfo">
+				<div class="step-tit">
+					<h5>使用优惠/抵用</h5>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="order-summary" id="foot">
+
+	</div>
+	<div class="clearfix trade" id="foot2">
+
+	</div>
+	<div class="submit">
+		<a class="sui-btn btn-danger btn-xlarge" onclick="submitOrder()">提交订单</a>
+	</div>
+</div>
+<!-- 底部栏位 -->
+<!--拼接应付金额-->
+<div style="display: none" id="foot3">
+	<div class="fc-price">应付金额:<span class="price">¥##totalPrice##</span></div>
+	<div class="fc-receiverInfo" id="confim_addr"></div>
+</div>
+<!--拼接我的购物车中的商品-->
+<div id="send"  style="display: none" >
+	<ul class="yui3-g" >
+		<li class="yui3-u-1-6">
+			<span><img src="http://192.168.111.134:80/##filePath##"  width="50px" /></span>
+		</li>
+		<li class="yui3-u-7-12">
+			<div class="desc">##productName##</div>
+			<div class="seven">7天无理由退货</div>
+		</li>
+		<li class="yui3-u-1-12">
+			<div class="price">##price##</div>
+		</li>
+		<li class="yui3-u-1-12">
+			<div class="num">X##count##</div>
+		</li>
+		<li class="yui3-u-1-12">
+			<div class="price">小计:##stotalPrice##</div>
+		</li>
+		<li class="yui3-u-1-12">
+			<div class="exit">有货</div>
+		</li>
+
+	</ul>
+</div>
+
+
+<div style="display: none" id="address">
+	<div class="con name ##aaaa##" onclick="changeAddress('##id##')" id="##id##">
+		<a href="javascript:;" >##addressee##<span title="点击取消选择">&nbsp;</span></a>
+	</div>
+	<div class="con address">##addressee## &nbsp ##addressName##&nbsp;&nbsp;&nbsp;&nbsp;<span>##phone##</span>
+		&nbsp;&nbsp;&nbsp;&nbsp;##status##&nbsp;&nbsp;&nbsp;&nbsp;
+		<a data-toggle="modal" data-target=".edit" data-keyboard="false" >编辑</a>&nbsp;&nbsp;<a href="javascript:;" onclick="delAddress('##id##')">删除</a>
+	</div>
+	<div class="clearfix"></div>
+	<input type="hidden" id="v_##id##" value="寄送至:##addressName## &nbsp;&nbsp;&nbsp;&nbsp;收货人：##addressee##&nbsp;&nbsp;&nbsp; &nbsp;##phone##">
+</div>
+
+<!--页面底部-->
+<!--拼接总件数 总金额-->
+<div style="display: none" id="foot1">
+	<div class="static fr">
+		<div class="list">
+			<span><i class="number">##totalCount##</i>件商品，总商品金额</span>
+			<em class="allprice">¥##totalPrice##</em>
+		</div>
+		<div class="list">
+			<span>返现：</span>
+			<em class="money">0.00</em>
+		</div>
+		<div class="list">
+			<span>运费：</span>
+			<em class="transport">0.00</em>
+		</div>
+	</div>
+</div>
+
+<script src="/js/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="/js/shop/js/plugins/jquery.easing/jquery.easing.min.js"></script>
+<script type="text/javascript" src="/js/shop/js/plugins/sui/sui.min.js"></script>
+<script type="text/javascript" src="/js/shop/js/pages/getOrderInfo.js"></script>
+<script src="/js/common/nav3.js"></script>
+<script>
+    $(function () {
+        //在所有ajax执行之前带上token信息
+        beforeToken();
+        //查询收货地址信息
+        queryAddress();
+        //查询当前登陆会员的购物车信息
+        findCart();
+    })
+
+    //在所有ajax执行之前带上token信息
+    function beforeToken(){
+        $.ajaxSetup({
+            beforeSend: function(xhr) {
+                var token = window.localStorage.getItem("atoken");
+                console.log("token:"+token);
+                xhr.setRequestHeader("token",token);
+            }
+        })
+    }
+
+    // 更换收货人
+    var address_id;
+    function changeAddress(id){
+        $("#address_li >div").removeClass("selected")
+        $("#"+id).addClass("selected")
+        var value = $("#v_"+id).val();
+        $("#confim_addr").html(value);
+        address_id = id;
+    }
+
+    //查询商品详情
+    function findCart() {
+        if (isLogin) {
+        $.post({
+            url: "http://localhost:8086/car/queryCart.do",
+            dataType: "json",
+            type: "post",
+            success: function (data) {
+                if (data.status == 200) {
+                    var cart = data.data;
+                    var productList = cart.cartList;
+                    var temp = $("#send").html();
+                    var foot1 = $("#foot1").html();
+                    var foot3 = $("#foot3").html();
+                    for (var i = 0; i < productList.length; i++) {
+                        var product = productList[i]
+                        var cartInfo = temp.replace(/##productName##/g, product.productName)
+                            .replace(/##count##/g, product.count)
+                            .replace(/##price##/g, product.price)
+                            .replace(/##filePath##/g, product.filePath)
+                            .replace(/##stotalPrice##/g, product.stotalPrice)
+                        $("#song").append(cartInfo)
+                    }
+                    var c = foot1.replace(/##totalCount##/g, cart.totalCount).replace(/##totalPrice##/g, cart.totalPrice)
+                    $("#foot").append(c);
+                    var d = foot3.replace(/##totalPrice##/g, cart.totalPrice)
+                    $("#foot2").append(d);
+
+                }
+            }
+        })
+    }
+    }
+
+    //查询收货地址
+    function queryAddress() {
+        if (isLogin) {
+        $.post({
+            url: "http://localhost:8086/address/queryAddressAll.do",
+            dataType: "json",
+            type: "post",
+            async: false,
+            success: function (data) {
+                aa = data.data;
+                console.log(JSON.stringify(aa));
+                if (data.status == 200) {
+                    var addr = data.data;
+                    var addres = $("#address").html();
+                    for (var i = 0; i < addr.length; i++) {
+                        var address = addr[i];
+                        var ad = addres.replace(/##addressee##/g, address.addressee).replace(/##id##/g, address.id)
+                            .replace(/##addressName##/g, address.addressName)
+                            .replace(/##phone##/g, address.phone)
+                            .replace(/##status##/g, address.status == 1 ? "<span class=\"base\">默认地址</span>" : "")
+                            .replace(/##aaaa##/g, address.status == 1 ? "selected" : "")
+                        $("#address_li").append(ad)
+                        if (address.status == 1) {
+                            $("#confim_addr").html("寄送至:" + address.addressName + " 收货人：" + address.addressee + " 联系电话：" + address.phone + "")
+                            address_id = address.id;
+                        }
+                    }
+
+                }
+            },
+            error: function () {
+                alert("查询收货信息失败!!")
+            }
+        })
+    }
+    }
+
+    //添加送货地址
+    function addAddress() {
+        var addressee = $("#addressee").val();
+        var addressName = $("#addressName").val();
+        var phone = $("#phone").val();
+        var status = $("[name='status']:checked").val();
+        if (isLogin) {
+        $.post({
+            url: "http://localhost:8086/address/addAddress.do",
+            data: {"addressee": addressee, "addressName": addressName, "phone": phone, "status": status},
+            success: function (data) {
+                if (data.status == 200) {
+                    location.reload();
+                }
+            }
+        })
+    }
+    }
+
+    //删除收货地址
+    function delAddress(id) {
+        if (isLogin) {
+        if (confirm("您确定要删除吗？")) {
+            $.ajax({
+                url: "http://localhost:8086/address/deleteAddress.do",
+                data: {"id": id},
+                success: function (data) {
+                    console.log(JSON.stringify(data))
+                    if (data.status == 200) {
+                        location.reload();
+                    }
+                }
+            });
+        }
+    }
+    }
+
+    /* 提交订单 */
+    function submitOrder() {
+        $.post(
+            "http://localhost:8086/order/buildOrder.do",
+            {"payType": 1, "addressId": address_id},
+            function (data) {
+                /*alert(JSON.stringify(data))*/
+                if (data.status == 200) {
+                    var shortList = data.data;
+                    if (shortList.length == 0) {
+                        location.href = "/pay.html";
+                    } else {
+                        var str = "";
+                        for (var i = 0; i < shortList.length; i++) {
+                            var product = shortList[i];
+                            str += product.productName + ","
+                        }
+                        alert(str + "商品库存不足")
+                    }
+                }
+            }
+        )
+ }
+</script>
+</body>
+</html>
